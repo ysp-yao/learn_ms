@@ -70,6 +70,9 @@
     <RemoteBuildCommandLine>make</RemoteBuildCommandLine>
     <RemoteBuildOutputs>/root/projects/learn_ms/bin/mediasoup</RemoteBuildOutputs>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <RemoteBuildOutputs>/root/projects/learn_ms/bin/mediasoup</RemoteBuildOutputs>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="Makefile" />
   </ItemGroup>
