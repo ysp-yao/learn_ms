@@ -104,7 +104,8 @@ all: $(program_NAME)
 # $(LDFLAGS) $(TARGET_ARCH).
 $(program_NAME): check_pkg_libraries $(program_CXX_OBJS)
 	mkdir -p $(program_BIN_DIR)
-	$(LINK.cc) $(program_CXX_OBJS) -o $(program_BIN_DIR)/$(program_NAME)
+#	$(LINK.cc) $(program_CXX_OBJS) -o $(program_BIN_DIR)/$(program_NAME)
+	$(LINK.cc) $(program_CXX_OBJS) -o $(program_BIN_DIR)/$(program_NAME) $(LDFLAGS)
 
 
 # Check the required libraries with pkg-support.
