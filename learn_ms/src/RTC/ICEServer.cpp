@@ -16,7 +16,7 @@ ICEServer::ICEServer(Listener* listener) :
 	MS_TRACE();
 
 	char local_username[16];
-	char local_password[16];
+	char local_password[32];
 
 	this->localUsername = std::string(Utils::Crypto::GetRandomHexString(local_username, 16), 16);
 	this->localPassword = std::string(Utils::Crypto::GetRandomHexString(local_password, 32), 32);
