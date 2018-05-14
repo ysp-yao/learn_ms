@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{0c5b7f9c-d805-44f1-b7df-6448a0d0e426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{688e94f0-54a0-4c89-a1f3-4dfa9feb33cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ControlProtocol">
+      <UniqueIdentifier>{2ff525da-67cc-424f-811f-906ac7392ce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\handles">
+      <UniqueIdentifier>{5fa1a95d-7745-4143-a8a2-62282fb5566e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\RTC">
+      <UniqueIdentifier>{856a090f-91d3-4038-a7b3-15184842dcf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ControlProtocol\messages">
+      <UniqueIdentifier>{1a96026f-660f-4ded-bcae-73f6a83a7f8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ControlProtocol">
+      <UniqueIdentifier>{815c2dc0-4623-4788-a7eb-bbd7b9df683f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\handles">
+      <UniqueIdentifier>{21b54f57-b767-496d-a508-56fd91908cd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\RTC">
+      <UniqueIdentifier>{5553925e-edfd-4889-a43f-84787e737760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Utils">
+      <UniqueIdentifier>{00cc848c-a6ab-4915-a3b8-bcaff4b382ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ControlProtocol\grammar">
+      <UniqueIdentifier>{4ad32d44-bdf7-4917-a5c8-06414f322b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ControlProtocol\messages">
+      <UniqueIdentifier>{fbc0f0a9-3f9c-44ec-a594-25329eb44e42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\common.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Daemon.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Dispatcher.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LibSRTP.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LibUV.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Logger.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MediaSoup.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MediaSoupError.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenSSL.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Settings.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Version.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Worker.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\Message.h">
+      <Filter>include\ControlProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\messages.h">
+      <Filter>include\ControlProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\Parser.h">
+      <Filter>include\ControlProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\Request.h">
+      <Filter>include\ControlProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\TCPConnection.h">
+      <Filter>include\ControlProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\TCPServer.h">
+      <Filter>include\ControlProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\UnixStreamSocket.h">
+      <Filter>include\ControlProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\messages\RequestAuthenticate.h">
+      <Filter>include\ControlProtocol\messages</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\messages\RequestCreateConference.h">
+      <Filter>include\ControlProtocol\messages</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlProtocol\messages\RequestHello.h">
+      <Filter>include\ControlProtocol\messages</Filter>
+    </ClInclude>
+    <ClInclude Include="include\handles\SignalsHandler.h">
+      <Filter>include\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\handles\TCPConnection.h">
+      <Filter>include\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\handles\TCPServer.h">
+      <Filter>include\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\handles\Timer.h">
+      <Filter>include\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\handles\UDPSocket.h">
+      <Filter>include\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\handles\UnixStreamSocket.h">
+      <Filter>include\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\DTLSHandler.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\DTLSRole.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\FingerprintHash.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\ICEServer.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\Peer.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\Room.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\RTCPPacket.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\RTPPacket.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\SRTPProfile.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\SRTPSession.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\Stream.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\STUNMessage.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\TCPConnection.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\TCPServer.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\Transport.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\TransportSource.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RTC\UDPSocket.h">
+      <Filter>include\RTC</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Daemon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dispatcher.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LibSRTP.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LibUV.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Logger.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MediaSoup.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenSSL.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Settings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Version.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Worker.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\Message.cpp">
+      <Filter>src\ControlProtocol</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\Parser.cpp">
+      <Filter>src\ControlProtocol</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\Request.cpp">
+      <Filter>src\ControlProtocol</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\TCPConnection.cpp">
+      <Filter>src\ControlProtocol</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\TCPServer.cpp">
+      <Filter>src\ControlProtocol</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\UnixStreamSocket.cpp">
+      <Filter>src\ControlProtocol</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\messages\RequestAuthenticate.cpp">
+      <Filter>src\ControlProtocol\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\messages\RequestCreateConference.cpp">
+      <Filter>src\ControlProtocol\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlProtocol\messages\RequestHello.cpp">
+      <Filter>src\ControlProtocol\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\handles\SignalsHandler.cpp">
+      <Filter>src\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\handles\TCPConnection.cpp">
+      <Filter>src\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\handles\TCPServer.cpp">
+      <Filter>src\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\handles\Timer.cpp">
+      <Filter>src\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\handles\UDPSocket.cpp">
+      <Filter>src\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\handles\UnixStreamSocket.cpp">
+      <Filter>src\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\Crypto.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\File.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\IP.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\Socket.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\DTLSHandler.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\ICEServer.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\Peer.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\Room.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\RTCPPacket.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\RTPPacket.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\SRTPSession.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\Stream.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\STUNMessage.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\TCPConnection.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\TCPServer.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\Transport.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\TransportSource.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTC\UDPSocket.cpp">
+      <Filter>src\RTC</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
