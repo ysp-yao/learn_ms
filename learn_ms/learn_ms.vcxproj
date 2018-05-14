@@ -69,9 +69,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RemoteBuildCommandLine>make</RemoteBuildCommandLine>
     <RemoteBuildOutputs>/root/projects/learn_ms/bin/mediasoup</RemoteBuildOutputs>
+    <NMakeIncludeSearchPath>./include</NMakeIncludeSearchPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <RemoteBuildOutputs>/root/projects/learn_ms/bin/mediasoup</RemoteBuildOutputs>
+    <NMakeIncludeSearchPath>
+    </NMakeIncludeSearchPath>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Makefile" />
