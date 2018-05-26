@@ -48,7 +48,6 @@ SYSTEM_LIBS := pthread
 # External libraries with pkg-config support.
 PKG_LIBS :=
 PKG_LIBS += libuv >= 1.6.1
-PKG_LIBS += libconfig++ >= 1.4.8
 PKG_LIBS += openssl >= 1.0.1
 PKG_LIBS += libsrtp >= 1.5.2
 
@@ -107,7 +106,7 @@ all: $(APP_NAME)
 $(APP_NAME): check_pkg_libs echo_all_objs $(ALL_OBJS)
 	@ mkdir -p $(APP_BIN_DIR)
 	@ echo "INFO: linking .o objects and libraries into $(APP_BIN_DIR)/$(APP_NAME) ..."
-	$(LINK.cc) $(ALL_OBJS) $(DEP_LIBS) -o $(APP_BIN_DIR)/$(APP_NAME)
+	$(LINK.cc) $(ALL_OBJS) $(DEP_LIBS) -o $(APP_BIN_DIR)/$(APP_NAME) $(LDFLAGS)
 	@ echo "INFO: executable generated at $(APP_BIN_DIR)/$(APP_NAME)"
 
 # Check required libraries with pkg-support.

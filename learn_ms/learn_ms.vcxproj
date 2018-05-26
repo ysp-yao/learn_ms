@@ -26,6 +26,78 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\common.h" />
+    <ClInclude Include="include\DepLibSRTP.h" />
+    <ClInclude Include="include\DepLibUV.h" />
+    <ClInclude Include="include\DepOpenSSL.h" />
+    <ClInclude Include="include\DepUsrSCTP.h" />
+    <ClInclude Include="include\handles\SignalsHandler.h" />
+    <ClInclude Include="include\handles\TCPConnection.h" />
+    <ClInclude Include="include\handles\TCPServer.h" />
+    <ClInclude Include="include\handles\Timer.h" />
+    <ClInclude Include="include\handles\UDPSocket.h" />
+    <ClInclude Include="include\handles\UnixStreamSocket.h" />
+    <ClInclude Include="include\Logger.h" />
+    <ClInclude Include="include\Loop.h" />
+    <ClInclude Include="include\MediaSoupError.h" />
+    <ClInclude Include="include\RTC\DTLSHandler.h" />
+    <ClInclude Include="include\RTC\DTLSRole.h" />
+    <ClInclude Include="include\RTC\FingerprintHash.h" />
+    <ClInclude Include="include\RTC\ICEServer.h" />
+    <ClInclude Include="include\RTC\Peer.h" />
+    <ClInclude Include="include\RTC\Room.h" />
+    <ClInclude Include="include\RTC\RTCPPacket.h" />
+    <ClInclude Include="include\RTC\RTPPacket.h" />
+    <ClInclude Include="include\RTC\SRTPProfile.h" />
+    <ClInclude Include="include\RTC\SRTPSession.h" />
+    <ClInclude Include="include\RTC\Stream.h" />
+    <ClInclude Include="include\RTC\STUNMessage.h" />
+    <ClInclude Include="include\RTC\TCPConnection.h" />
+    <ClInclude Include="include\RTC\TCPServer.h" />
+    <ClInclude Include="include\RTC\Transport.h" />
+    <ClInclude Include="include\RTC\TransportSource.h" />
+    <ClInclude Include="include\RTC\UDPSocket.h" />
+    <ClInclude Include="include\Settings.h" />
+    <ClInclude Include="include\Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\DepLibSRTP.cpp" />
+    <ClCompile Include="src\DepLibUV.cpp" />
+    <ClCompile Include="src\DepOpenSSL.cpp" />
+    <ClCompile Include="src\DepUsrSCTP.cpp" />
+    <ClCompile Include="src\handles\SignalsHandler.cpp" />
+    <ClCompile Include="src\handles\TCPConnection.cpp" />
+    <ClCompile Include="src\handles\TCPServer.cpp" />
+    <ClCompile Include="src\handles\Timer.cpp" />
+    <ClCompile Include="src\handles\UDPSocket.cpp" />
+    <ClCompile Include="src\handles\UnixStreamSocket.cpp" />
+    <ClCompile Include="src\Logger.cpp" />
+    <ClCompile Include="src\Loop.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\RTC\DTLSHandler.cpp" />
+    <ClCompile Include="src\RTC\ICEServer.cpp" />
+    <ClCompile Include="src\RTC\Peer.cpp" />
+    <ClCompile Include="src\RTC\Room.cpp" />
+    <ClCompile Include="src\RTC\RTCPPacket.cpp" />
+    <ClCompile Include="src\RTC\RTPPacket.cpp" />
+    <ClCompile Include="src\RTC\SRTPSession.cpp" />
+    <ClCompile Include="src\RTC\Stream.cpp" />
+    <ClCompile Include="src\RTC\STUNMessage.cpp" />
+    <ClCompile Include="src\RTC\TCPConnection.cpp" />
+    <ClCompile Include="src\RTC\TCPServer.cpp" />
+    <ClCompile Include="src\RTC\Transport.cpp" />
+    <ClCompile Include="src\RTC\TransportSource.cpp" />
+    <ClCompile Include="src\RTC\UDPSocket.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\Utils\Crypto.cpp" />
+    <ClCompile Include="src\Utils\File.cpp" />
+    <ClCompile Include="src\Utils\IP.cpp" />
+    <ClCompile Include="src\Utils\Socket.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9cfdba1e-eae1-4108-bfa5-dbc545af1e8f}</ProjectGuid>
     <Keyword>Linux</Keyword>
@@ -76,104 +148,6 @@
     <NMakeIncludeSearchPath>
     </NMakeIncludeSearchPath>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include=".gitmodules" />
-    <None Include="Makefile" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\common.h" />
-    <ClInclude Include="include\ControlProtocol\Message.h" />
-    <ClInclude Include="include\ControlProtocol\messages.h" />
-    <ClInclude Include="include\ControlProtocol\messages\RequestAuthenticate.h" />
-    <ClInclude Include="include\ControlProtocol\messages\RequestCreateConference.h" />
-    <ClInclude Include="include\ControlProtocol\messages\RequestHello.h" />
-    <ClInclude Include="include\ControlProtocol\Parser.h" />
-    <ClInclude Include="include\ControlProtocol\Request.h" />
-    <ClInclude Include="include\ControlProtocol\TCPConnection.h" />
-    <ClInclude Include="include\ControlProtocol\TCPServer.h" />
-    <ClInclude Include="include\ControlProtocol\UnixStreamSocket.h" />
-    <ClInclude Include="include\Daemon.h" />
-    <ClInclude Include="include\Dispatcher.h" />
-    <ClInclude Include="include\handles\SignalsHandler.h" />
-    <ClInclude Include="include\handles\TCPConnection.h" />
-    <ClInclude Include="include\handles\TCPServer.h" />
-    <ClInclude Include="include\handles\Timer.h" />
-    <ClInclude Include="include\handles\UDPSocket.h" />
-    <ClInclude Include="include\handles\UnixStreamSocket.h" />
-    <ClInclude Include="include\LibSRTP.h" />
-    <ClInclude Include="include\LibUV.h" />
-    <ClInclude Include="include\Logger.h" />
-    <ClInclude Include="include\MediaSoup.h" />
-    <ClInclude Include="include\MediaSoupError.h" />
-    <ClInclude Include="include\OpenSSL.h" />
-    <ClInclude Include="include\RTC\DTLSHandler.h" />
-    <ClInclude Include="include\RTC\DTLSRole.h" />
-    <ClInclude Include="include\RTC\FingerprintHash.h" />
-    <ClInclude Include="include\RTC\ICEServer.h" />
-    <ClInclude Include="include\RTC\Peer.h" />
-    <ClInclude Include="include\RTC\Room.h" />
-    <ClInclude Include="include\RTC\RTCPPacket.h" />
-    <ClInclude Include="include\RTC\RTPPacket.h" />
-    <ClInclude Include="include\RTC\SRTPProfile.h" />
-    <ClInclude Include="include\RTC\SRTPSession.h" />
-    <ClInclude Include="include\RTC\Stream.h" />
-    <ClInclude Include="include\RTC\STUNMessage.h" />
-    <ClInclude Include="include\RTC\TCPConnection.h" />
-    <ClInclude Include="include\RTC\TCPServer.h" />
-    <ClInclude Include="include\RTC\Transport.h" />
-    <ClInclude Include="include\RTC\TransportSource.h" />
-    <ClInclude Include="include\RTC\UDPSocket.h" />
-    <ClInclude Include="include\Settings.h" />
-    <ClInclude Include="include\Utils.h" />
-    <ClInclude Include="include\Version.h" />
-    <ClInclude Include="include\Worker.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\ControlProtocol\Message.cpp" />
-    <ClCompile Include="src\ControlProtocol\messages\RequestAuthenticate.cpp" />
-    <ClCompile Include="src\ControlProtocol\messages\RequestCreateConference.cpp" />
-    <ClCompile Include="src\ControlProtocol\messages\RequestHello.cpp" />
-    <ClCompile Include="src\ControlProtocol\Parser.cpp" />
-    <ClCompile Include="src\ControlProtocol\Request.cpp" />
-    <ClCompile Include="src\ControlProtocol\TCPConnection.cpp" />
-    <ClCompile Include="src\ControlProtocol\TCPServer.cpp" />
-    <ClCompile Include="src\ControlProtocol\UnixStreamSocket.cpp" />
-    <ClCompile Include="src\Daemon.cpp" />
-    <ClCompile Include="src\Dispatcher.cpp" />
-    <ClCompile Include="src\handles\SignalsHandler.cpp" />
-    <ClCompile Include="src\handles\TCPConnection.cpp" />
-    <ClCompile Include="src\handles\TCPServer.cpp" />
-    <ClCompile Include="src\handles\Timer.cpp" />
-    <ClCompile Include="src\handles\UDPSocket.cpp" />
-    <ClCompile Include="src\handles\UnixStreamSocket.cpp" />
-    <ClCompile Include="src\LibSRTP.cpp" />
-    <ClCompile Include="src\LibUV.cpp" />
-    <ClCompile Include="src\Logger.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MediaSoup.cpp" />
-    <ClCompile Include="src\OpenSSL.cpp" />
-    <ClCompile Include="src\RTC\DTLSHandler.cpp" />
-    <ClCompile Include="src\RTC\ICEServer.cpp" />
-    <ClCompile Include="src\RTC\Peer.cpp" />
-    <ClCompile Include="src\RTC\Room.cpp" />
-    <ClCompile Include="src\RTC\RTCPPacket.cpp" />
-    <ClCompile Include="src\RTC\RTPPacket.cpp" />
-    <ClCompile Include="src\RTC\SRTPSession.cpp" />
-    <ClCompile Include="src\RTC\Stream.cpp" />
-    <ClCompile Include="src\RTC\STUNMessage.cpp" />
-    <ClCompile Include="src\RTC\TCPConnection.cpp" />
-    <ClCompile Include="src\RTC\TCPServer.cpp" />
-    <ClCompile Include="src\RTC\Transport.cpp" />
-    <ClCompile Include="src\RTC\TransportSource.cpp" />
-    <ClCompile Include="src\RTC\UDPSocket.cpp" />
-    <ClCompile Include="src\Settings.cpp" />
-    <ClCompile Include="src\Utils\Crypto.cpp" />
-    <ClCompile Include="src\Utils\File.cpp" />
-    <ClCompile Include="src\Utils\IP.cpp" />
-    <ClCompile Include="src\Utils\Socket.cpp" />
-    <ClCompile Include="src\Version.cpp" />
-    <ClCompile Include="src\Worker.cpp" />
-  </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
