@@ -59,9 +59,11 @@ DEP_SOURCES += ./deps/jsoncpp/dist/jsoncpp.cpp
 # Dependencies header directories.
 DEP_HEADERS_DIRS :=
 DEP_HEADERS_DIRS += ./deps/jsoncpp/dist
+DEP_HEADERS_DIRS += ./deps/usrsctp/usrsctplib
 
 # Dependencies static libraries to link with.
 DEP_LIBS :=
+DEP_LIBS += ./deps/usrsctp/usrsctplib/.libs/libusrsctp.a
 
 # Object files to build.
 ALL_OBJS := ${APP_SOURCES:.cpp=.o} ${DEP_SOURCES:.cpp=.o}
@@ -103,34 +105,37 @@ all: $(APP_NAME)
 # LFLAGS, etc. LINK.cc is usually defined as: $(CXX) $(CXXFLAGS) $(CPPFLAGS)
 # $(LDFLAGS) $(TARGET_ARCH).
 $(APP_NAME): check_pkg_libs echo_all_objs $(ALL_OBJS)
-	@mkdir -p $(APP_BIN_DIR)
-	@echo "INFO: linking .o objects and libraries into $(APP_BIN_DIR)/$(APP_NAME) ..."
-	$(LINK.cc) $(ALL_OBJS) $(DEP_LIBS) -o $(APP_BIN_DIR)/$(APP_NAME) $(LDFLAGS)
+	@ mkdir -p $(APP_BIN_DIR)
+	@ echo "INFO: linking .o objects and libraries into $(APP_BIN_DIR)/$(APP_NAME) ..."
+	$(LINK.cc) $(ALL_OBJS) $(DEP_LIBS) -o $(APP_BIN_DIR)/$(APP_NAME)
+	@ echo "INFO: executable generated at $(APP_BIN_DIR)/$(APP_NAME)"
 
 # Check required libraries with pkg-support.
 check_pkg_libs:
-	@echo "INFO: checking required PKG libraries ..."
-	@pkg-config --exists --print-errors "$(PKG_LIBS)"
+	@ echo "INFO: checking required PKG libraries ($(strip $(PKG_LIBS))) ..."
+	@ pkg-config --exists --print-errors "$(PKG_LIBS)"
 
 echo_all_objs:
-	@echo "INFO: compiling source files into .o object files ..."
+	@ echo "INFO: compiling source files into .o object files ..."
 
 # This target removes the built app and the generated object files. The @ symbol
 # indicates that the line should be run silently, and the - symbol indicates that
 # errors should be ignored (i.e., the file doesn't exist).
 clean:
-	@echo "INFO: deleting $(APP_BIN_DIR) folder ..."
-	@$(RM) -rf $(APP_BIN_DIR)
-	@echo "INFO: deleting .o object files ..."
-	@$(RM) $(ALL_OBJS)
+	@ echo "INFO: deleting $(APP_BIN_DIR) folder ..."
+	@ $(RM) -rf $(APP_BIN_DIR)
+	@ echo "INFO: deleting .o object files ..."
+	@ $(RM) $(ALL_OBJS)
 
 deps:
-	@echo "INFO: retrieving Git submodules ..."
+	@ echo "INFO: retrieving Git submodules ..."
 	git submodule init
 	git submodule update
-	@echo "INFO: building jsoncpp stuff ..."
+	@ echo "INFO: building jsoncpp lib ..."
 	cd ./deps/jsoncpp && python amalgamate.py >/dev/null
+	@ echo "INFO: building usrsctp lib ..."
+	cd ./deps/usrsctp && ./bootstrap && autoconf && ./configure && make
 
 doc:
-	@echo "INFO: generating documentation ..."
+	@ echo "INFO: generating documentation ..."
 	cldoc generate $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -- --output cldoc $(APP_SOURCES) $(APP_HEADERS)

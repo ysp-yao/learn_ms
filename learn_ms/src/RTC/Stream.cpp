@@ -3,27 +3,25 @@
 #include "RTC/Stream.h"
 #include "Logger.h"
 
+namespace RTC
+{
+	/* Instance methods. */
 
-namespace RTC {
+	Stream::Stream()
+	{
+		MS_TRACE();
+	}
 
+	Stream::~Stream()
+	{
+		MS_TRACE();
+	}
 
-/* Instance methods. */
+	void Stream::Close()
+	{
+		MS_TRACE();
 
-Stream::Stream() {
-	MS_TRACE();
-}
-
-
-Stream::~Stream() {
-	MS_TRACE();
-}
-
-
-void Stream::Close() {
-	MS_TRACE();
-
-	delete this;
-}
-
-
+		// TODO: sure I want this?
+		delete this;
+	}
 }  // namespace RTC

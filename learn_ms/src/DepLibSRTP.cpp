@@ -1,13 +1,13 @@
-#define MS_CLASS "LibSRTP"
+#define MS_CLASS "DepLibSRTP"
 
-#include "LibSRTP.h"
+#include "DepLibSRTP.h"
 #include "MediaSoupError.h"
 #include "Logger.h"
 
-
 /* Static variables. */
 
-std::vector<const char*> LibSRTP::errors = {
+std::vector<const char*> DepLibSRTP::errors =
+{
 	// From 0 (err_status_ok) to 24 (err_status_pfkey_err).
 	"nothing to report (err_status_ok)",
 	"unspecified failure (err_status_fail)",
@@ -36,30 +36,26 @@ std::vector<const char*> LibSRTP::errors = {
 	"error while using pfkey (err_status_pfkey_err)"
 };
 
-
 /* Static methods. */
 
-void LibSRTP::ClassInit() {
+void DepLibSRTP::ClassInit()
+{
 	MS_TRACE();
 
 	err_status_t err;
-
-	MS_DEBUG("loaded libsrtp");
 
 	err = srtp_init();
-	if (LibSRTP::IsError(err))
-		MS_THROW_ERROR("srtp_init() failed: %s", LibSRTP::GetErrorString(err));
+	if (DepLibSRTP::IsError(err))
+		MS_THROW_ERROR("srtp_init() failed: %s", DepLibSRTP::GetErrorString(err));
 }
 
-
-void LibSRTP::ClassDestroy() {
+void DepLibSRTP::ClassDestroy()
+{
 	MS_TRACE();
 
 	err_status_t err;
 
-	MS_DEBUG("unloading libsrtp");
-
 	err = srtp_shutdown();
-	if (LibSRTP::IsError(err))
-		MS_CRIT("srtp_shutdown() failed: %s", LibSRTP::GetErrorString(err));
+	if (DepLibSRTP::IsError(err))
+		MS_CRIT("srtp_shutdown() failed: %s", DepLibSRTP::GetErrorString(err));
 }
