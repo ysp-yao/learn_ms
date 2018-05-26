@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include=".gitmodules" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\common.h">
