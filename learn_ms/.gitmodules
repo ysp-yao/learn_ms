@@ -1,6 +1,6 @@
-[submodule "deps/jsoncpp"]
-	path = deps/jsoncpp
+[submodule "submodules/jsoncpp"]
+	path = submodules/jsoncpp
 	url = https://github.com/open-source-parsers/jsoncpp.git
-[submodule "deps/usrsctp"]
-	path = deps/usrsctp
+[submodule "submodules/usrsctp"]
+	path = submodules/usrsctp
 	url = https://github.com/sctplab/usrsctp.git

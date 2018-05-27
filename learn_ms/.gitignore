@@ -1,0 +1,7 @@
+/node_modules/
+/worker/**/*.o
+/worker/bin/
+/worker/cldoc/
+/worker/mediasoup-tester.sh
+/TODO
+/test.js

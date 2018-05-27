@@ -1,5 +1,4 @@
-APP_NAME := mediasoup
-
+APP_NAME := mediasoup-worker
 
 #
 # Compiler.
@@ -25,22 +24,21 @@ DEV_FLAGS := $(DO_DEBUG_SYMBOLS) $(DO_SANITIZE) $(DO_OPTIMIZE) $(DO_PEDANTIC)
 #
 # -DMS_DEVEL enables MS_TRACE().
 
-
 #
 # Settings.
 #
 
 # App source files.
-APP_SOURCES := $(shell find ./src -name "*.cpp")
+APP_SOURCES := $(shell find ./worker/src -name "*.cpp")
 
 # App headers directory.
-APP_HEADERS_DIR := ./include
+APP_HEADERS_DIR := ./worker/include
 
 # App header files (just for documentation).
 APP_HEADERS := $(shell find $(APP_HEADERS_DIR) -name "*.h")
 
 # App binary directory.
-APP_BIN_DIR := ./bin
+APP_BIN_DIR := ./worker/bin
 
 # System libraries to link with.
 SYSTEM_LIBS := pthread
@@ -53,16 +51,17 @@ PKG_LIBS += libsrtp >= 1.5.2
 
 # Dependencies source files.
 DEP_SOURCES :=
-DEP_SOURCES += ./deps/jsoncpp/dist/jsoncpp.cpp
+DEP_SOURCES += ./submodules/jsoncpp/dist/jsoncpp.cpp
 
 # Dependencies header directories.
 DEP_HEADERS_DIRS :=
-DEP_HEADERS_DIRS += ./deps/jsoncpp/dist
-DEP_HEADERS_DIRS += ./deps/usrsctp/usrsctplib
+DEP_HEADERS_DIRS += ./submodules/jsoncpp/dist
+DEP_HEADERS_DIRS += ./submodules/usrsctp/usrsctplib
+DEP_HEADERS_DIRS += ./submodules/picojson
 
 # Dependencies static libraries to link with.
 DEP_LIBS :=
-DEP_LIBS += ./deps/usrsctp/usrsctplib/.libs/libusrsctp.a
+DEP_LIBS += ./submodules/usrsctp/usrsctplib/.libs/libusrsctp.a
 
 # Object files to build.
 ALL_OBJS := ${APP_SOURCES:.cpp=.o} ${DEP_SOURCES:.cpp=.o}
@@ -83,19 +82,18 @@ CXXFLAGS += -std=c++11 -Wall $(DEV_FLAGS)
 LDFLAGS += $(foreach lib, $(SYSTEM_LIBS), -l$(lib))
 LDFLAGS += $(shell pkg-config --libs "$(PKG_LIBS)")
 
-
 #
 # Targets.
 #
 
-# This indicates that "all", APP_NAME, "check_pkg_libs" and "clean" are
-# "phony targets". Therefore calling "make XXXX" should execute the content of its
-# build rules, even if a newer file named "XXXX" exists.
-.PHONY: all $(APP_NAME) check_pkg_libs echo_all_objs clean deps doc
+# This indicates that those names are "phony targets". Therefore calling
+# "make XXXX" should execute the content of its build rules, even if a newer
+# file named "XXXX" exists.
+.PHONY: default $(APP_NAME) check_pkg_libs echo_compiling_all_objs clean submodules doc
 
 # This is first build rule in the Makefile, and so executing "make" and executing
-# "make all" are the same. The target simply depends on $(APP_NAME).
-all: $(APP_NAME)
+# "make default" are the same. The target simply depends on $(APP_NAME).
+default: $(APP_NAME)
 
 # The app depends on the object files (which are automatically built using the
 # predefined build rules, nothing needs to be given explicitly for them).
@@ -103,7 +101,7 @@ all: $(APP_NAME)
 # the same name as the app. Note that LINK.cc makes use of CXX, CXXFLAGS,
 # LFLAGS, etc. LINK.cc is usually defined as: $(CXX) $(CXXFLAGS) $(CPPFLAGS)
 # $(LDFLAGS) $(TARGET_ARCH).
-$(APP_NAME): check_pkg_libs echo_all_objs $(ALL_OBJS)
+$(APP_NAME): check_pkg_libs echo_compiling_all_objs $(ALL_OBJS)
 	@ mkdir -p $(APP_BIN_DIR)
 	@ echo "INFO: linking .o objects and libraries into $(APP_BIN_DIR)/$(APP_NAME) ..."
 	$(LINK.cc) $(ALL_OBJS) $(DEP_LIBS) -o $(APP_BIN_DIR)/$(APP_NAME) $(LDFLAGS)
@@ -114,7 +112,7 @@ check_pkg_libs:
 	@ echo "INFO: checking required PKG libraries ($(strip $(PKG_LIBS))) ..."
 	@ pkg-config --exists --print-errors "$(PKG_LIBS)"
 
-echo_all_objs:
+echo_compiling_all_objs:
 	@ echo "INFO: compiling source files into .o object files ..."
 
 # This target removes the built app and the generated object files. The @ symbol
@@ -126,14 +124,14 @@ clean:
 	@ echo "INFO: deleting .o object files ..."
 	@ $(RM) $(ALL_OBJS)
 
-deps:
+submodules:
 	@ echo "INFO: retrieving Git submodules ..."
 	git submodule init
 	git submodule update
 	@ echo "INFO: building jsoncpp lib ..."
-	cd ./deps/jsoncpp && python amalgamate.py >/dev/null
+	cd ./submodules/jsoncpp && python amalgamate.py >/dev/null
 	@ echo "INFO: building usrsctp lib ..."
-	cd ./deps/usrsctp && ./bootstrap && autoconf && ./configure && make
+	cd ./submodules/usrsctp && ./bootstrap && autoconf && ./configure && make
 
 doc:
 	@ echo "INFO: generating documentation ..."
