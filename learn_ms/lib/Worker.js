@@ -10,10 +10,14 @@ const spawn = require('child_process').spawn;
 const process = require('process');
 const EventEmitter = require('events').EventEmitter;
 
-const WORKER_BIN_PATH = path.join(__dirname, '..', 'worker', 'bin', 'mediasoup-worker');
+const Channel = require('./Channel');
+const Room = require('./Room');
 
-// Set an env variable to tell workers which the Control FD is
-process.env.MEDIASOUP_CONTROL_FD = '3';
+const WORKER_BIN_PATH = path.join(__dirname, '..', 'worker', 'bin', 'mediasoup-worker');
+const CHANNEL_FD = 3;
+
+// Set an env variable to tell childs which the Channel FD is
+process.env.MEDIASOUP_CHANNEL_FD = String(CHANNEL_FD);
 
 class Worker extends EventEmitter
 {
@@ -30,46 +34,39 @@ class Worker extends EventEmitter
 			stdio    : [ 'pipe', 'pipe', 'pipe', 'pipe' ]
 		};
 
-		// Create the worker child process
+		// Create the mediasoup-worker child process
 		this._child = spawn(WORKER_BIN_PATH, spawnArgs, spawnOptions);
 
-		// TODO: TMP
-		global.p = this._child.stdio[3];
+		// Channel instance
+		this._channel = new Channel(this._child.stdio[CHANNEL_FD]);
+
+		// Set of Room instances
+		this._rooms = new Set();
+
+		// Set child process events
 
 		this._child.stdout.on('data', (buffer) =>
 		{
-			buffer.toString('utf8').split('\n').forEach((line) =>
-			{
-				if (line)
-				{
-					debug(line);
-				}
-			});
+			buffer.toString('utf8').split('\n').forEach((line) => line && debug(line));
 		});
 
 		this._child.stderr.on('data', (buffer) =>
 		{
-			buffer.toString('utf8').split('\n').forEach((line) =>
-			{
-				if (line)
-				{
-					debugerror(line);
-				}
-			});
+			buffer.toString('utf8').split('\n').forEach((line) => line && debugerror(line));
 		});
 
 		this._child.on('exit', (code, signal) =>
 		{
-			debug('worker process closed [id:%s, code:%s, signal:%s]', id, code, signal);
+			debug('child process closed [id:%s, code:%s, signal:%s]', id, code, signal);
 
-			this.emit('exit', code, signal);
+			// TODO: do something
 		});
 
 		this._child.on('error', (error) =>
 		{
-			debugerror('worker process error [id:%s]: %s', id, error);
+			debugerror('child process error [id:%s]: %s', id, error);
 
-			this.emit('error', error);
+			// TODO: do something
 		});
 	}
 
@@ -77,8 +74,26 @@ class Worker extends EventEmitter
 	{
 		debug('close()');
 
-		// Kill worker child
+		// Kill child
 		this._child.kill('SIGTERM');
+
+		// Close every Room
+		this._rooms.forEach(room => room.close());
+
+		this.emit('close');
+	}
+
+	createRoom(options)
+	{
+		debug('createRoom()');
+
+		let room = new Room(options, this._channel);
+
+		// Store the Room instance and remove it when closed
+		this._rooms.add(room);
+		room.on('close', () => this._rooms.delete(room));
+
+		return room;
 	}
 }
 

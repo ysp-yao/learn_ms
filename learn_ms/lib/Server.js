@@ -5,8 +5,9 @@ const debugerror = require('debug')('mediasoup:ERROR:Server');
 
 debugerror.log = console.error.bind(console);
 
-const process = require('process');
 const os = require('os');
+const path = require('path');
+const EventEmitter = require('events').EventEmitter;
 const check = require('check-types');
 const randomString = require('random-string');
 
@@ -19,21 +20,12 @@ const VALID_PARAMETERS =
 	'dtlsCertificateFile', 'dtlsPrivateKeyFile'
 ];
 
-// Set of Server instances
-var servers = new Set();
-
-process.on('exit', () =>
-{
-	for (let server of servers)
-	{
-		server.close();
-	}
-});
-
-class Server
+class Server extends EventEmitter
 {
 	constructor(options)
 	{
+		super();
+
 		debug('constructor() [options:%o]', options);
 
 		let serverId = randomString({ numeric: false, length: 6 }).toLowerCase();
@@ -42,16 +34,23 @@ class Server
 
 		options = options || {};
 
+		// Set of Worker instances
+		this._workers = new Set();
+
 		if (check.integer(options.numWorkers) && check.positive(options.numWorkers))
 		{
 			numWorkers = options.numWorkers;
 		}
 
-		// Map of Worker instances
-		this._workers = new Map();
+		if (check.nonEmptyString(options.dtlsCertificateFile))
+		{
+			options.dtlsCertificateFile = path.resolve(options.dtlsCertificateFile);
+		}
 
-		// Add the server to the set
-		servers.add(this);
+		if (check.nonEmptyString(options.dtlsPrivateKeyFile))
+		{
+			options.dtlsPrivateKeyFile = path.resolve(options.dtlsPrivateKeyFile);
+		}
 
 		for (let key of Object.keys(options))
 		{
@@ -63,27 +62,17 @@ class Server
 
 		debug('constructor() [worker parameters:"%s"]', parameters.join(' '));
 
-		// Create mediasoup-worker child processes
+		// Create Worker instances
 		for (let i = 1; i <= numWorkers; i++)
 		{
 			let worker;
 			let workerId = serverId + '#' + i;
 
-			// Create a Worker instance
 			worker = new Worker(workerId, parameters);
 
-			worker.on('exit', () =>
-			{
-				this._workers.delete(workerId);
-			});
-
-			worker.on('error', () =>
-			{
-				this._workers.delete(workerId);
-			});
-
-			// Add the worker to the map
-			this._workers.set(workerId, worker);
+			// Store the Worker instance and remove it when closed
+			this._workers.add(worker);
+			worker.once('close', () => this._workers.delete(worker));
 		}
 	}
 
@@ -91,17 +80,26 @@ class Server
 	{
 		debug('close()');
 
-		// Remove this server from the set
-		servers.delete(this);
+		// Close every Worker
+		this._workers.forEach(worker => worker.close());
 
-		// Close every worker
-		for (let worker of this._workers.values())
-		{
-			worker.close();
-		}
+		this.emit('close');
+	}
 
-		// Clear the workers map
-		this._workers.clear();
+	createRoom(options)
+	{
+		debug('createRoom()');
+
+		let worker = this._getRandomWorker();
+
+		return worker.createRoom(options);
+	}
+
+	_getRandomWorker()
+	{
+		let array = Array.from(this._workers);
+
+		return array[array.length * Math.random() << 0];
 	}
 }
 

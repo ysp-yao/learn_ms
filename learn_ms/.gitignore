@@ -1,5 +1,4 @@
 /node_modules/
-/worker/submodules/
 /worker/**/*.o
 /worker/bin/
 /worker/cldoc/
