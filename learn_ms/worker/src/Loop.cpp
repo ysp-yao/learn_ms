@@ -6,7 +6,6 @@
 #include "Logger.h"
 #include <string>
 #include <csignal>  // sigfillset, pthread_sigmask()
-#include <cstdlib>  // std::genenv()
 #include <cerrno>
 
 /* Instance methods. */
@@ -15,17 +14,12 @@ Loop::Loop()
 {
 	MS_TRACE();
 
-	int channelFd = std::stoi(std::getenv("MEDIASOUP_CHANNEL_FD"));
-
 	// Set the signals handler.
 	this->signalsHandler = new SignalsHandler(this);
 
 	// Add signals to handle.
 	this->signalsHandler->AddSignal(SIGINT, "INT");
 	this->signalsHandler->AddSignal(SIGTERM, "TERM");
-
-	// Set the Channel socket.
-	this->channel = new Channel::UnixStreamSocket(this, channelFd);
 
 	MS_DEBUG("starting libuv loop");
 	DepLibUV::RunLoop();
@@ -59,9 +53,6 @@ void Loop::Close()
 
 	// Close the SignalsHandler.
 	this->signalsHandler->Close();
-
-	// Close the Channel socket
-	this->channel->Close();
 }
 
 void Loop::onSignal(SignalsHandler* signalsHandler, int signum)

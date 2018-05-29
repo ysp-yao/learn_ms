@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="worker\include\Channel\UnixStreamSocket.h" />
     <ClInclude Include="worker\include\handles\SignalsHandler.h" />
     <ClInclude Include="worker\include\handles\TCPConnection.h" />
     <ClInclude Include="worker\include\handles\TCPServer.h" />
@@ -37,7 +36,6 @@
     <ClInclude Include="worker\include\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="worker\src\Channel\UnixStreamSocket.cpp" />
     <ClCompile Include="worker\src\handles\SignalsHandler.cpp" />
     <ClCompile Include="worker\src\handles\TCPConnection.cpp" />
     <ClCompile Include="worker\src\handles\TCPServer.cpp" />
@@ -72,6 +70,6 @@
     <ClCompile Include="worker\src\Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Makefile" />
+    <None Include="worker\Makefile" />
   </ItemGroup>
 </Project>

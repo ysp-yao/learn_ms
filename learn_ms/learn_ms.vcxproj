@@ -27,7 +27,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="worker\include\Channel\UnixStreamSocket.h" />
     <ClInclude Include="worker\include\common.h" />
     <ClInclude Include="worker\include\DepLibSRTP.h" />
     <ClInclude Include="worker\include\DepLibUV.h" />
@@ -63,7 +62,6 @@
     <ClInclude Include="worker\include\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="worker\src\Channel\UnixStreamSocket.cpp" />
     <ClCompile Include="worker\src\DepLibSRTP.cpp" />
     <ClCompile Include="worker\src\DepLibUV.cpp" />
     <ClCompile Include="worker\src\DepOpenSSL.cpp" />
@@ -98,7 +96,7 @@
     <ClCompile Include="worker\src\Utils\Socket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Makefile" />
+    <None Include="worker\Makefile" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9cfdba1e-eae1-4108-bfa5-dbc545af1e8f}</ProjectGuid>

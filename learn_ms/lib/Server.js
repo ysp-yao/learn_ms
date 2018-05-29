@@ -1,18 +1,19 @@
 'use strict';
 
+const path = require('path');
+const spawn = require('child_process').spawn;
+const process = require('process');
+const os = require('os');
+
 const debug = require('debug')('mediasoup:Server');
 const debugerror = require('debug')('mediasoup:ERROR:Server');
 
 debugerror.log = console.error.bind(console);
 
-const os = require('os');
-const path = require('path');
-const EventEmitter = require('events').EventEmitter;
 const check = require('check-types');
 const randomString = require('random-string');
 
-const Worker = require('./Worker');
-
+const WORKER_BIN_PATH = path.join(__dirname, '..', 'worker', 'bin', 'mediasoup-worker');
 const DEFAULT_NUM_WORKERS = Object.keys(os.cpus()).length;
 const VALID_PARAMETERS =
 [
@@ -20,12 +21,20 @@ const VALID_PARAMETERS =
 	'dtlsCertificateFile', 'dtlsPrivateKeyFile'
 ];
 
-class Server extends EventEmitter
+var servers = new Set();
+
+process.on('exit', () =>
+{
+	for (let server of servers)
+	{
+		server.close();
+	}
+});
+
+class Server
 {
 	constructor(options)
 	{
-		super();
-
 		debug('constructor() [options:%o]', options);
 
 		let serverId = randomString({ numeric: false, length: 6 }).toLowerCase();
@@ -34,23 +43,13 @@ class Server extends EventEmitter
 
 		options = options || {};
 
-		// Set of Worker instances
-		this._workers = new Set();
-
 		if (check.integer(options.numWorkers) && check.positive(options.numWorkers))
 		{
 			numWorkers = options.numWorkers;
 		}
 
-		if (check.nonEmptyString(options.dtlsCertificateFile))
-		{
-			options.dtlsCertificateFile = path.resolve(options.dtlsCertificateFile);
-		}
-
-		if (check.nonEmptyString(options.dtlsPrivateKeyFile))
-		{
-			options.dtlsPrivateKeyFile = path.resolve(options.dtlsPrivateKeyFile);
-		}
+		// Map of mediasoup-worker child processes
+		this._workers = new Map();
 
 		for (let key of Object.keys(options))
 		{
@@ -60,28 +59,67 @@ class Server extends EventEmitter
 			}
 		}
 
-		debug('constructor() [worker parameters:"%s"]', parameters.join(' '));
+		debug('constructor() | [worker parameters:"%s"]', parameters.join(' '));
 
-		// Create Worker instances
+		// Add the server to the set
+		servers.add(this);
+
+		// Create mediasoup-worker child processes
 		for (let i = 1; i <= numWorkers; i++)
 		{
 			let worker;
 			let workerId = serverId + '#' + i;
-
-			worker = new Worker(workerId, parameters);
-
-			worker.on('exit', () =>
+			let spawnArgs = [ workerId ].concat(parameters);
+			let spawnOptions =
 			{
-				this._workers.delete(worker);
+				detached : false,
+				stdio    : [ 'pipe', 'pipe', 'pipe', 'ipc' ]
+			};
+
+			debug('constructor() | creating worker [workerId:%s]', workerId);
+
+			// Create the worker child process
+			worker = spawn(WORKER_BIN_PATH, spawnArgs, spawnOptions);
+
+			// Store worker id within the worker process
+			worker.workerId = workerId;
+
+			worker.stdout.on('data', (buffer) =>
+			{
+				buffer.toString('utf8').split('\n').forEach((line) =>
+				{
+					if (line)
+					{
+						debug(line);
+					}
+				});
 			});
 
-			worker.on('error', () =>
+			worker.stderr.on('data', (buffer) =>
 			{
-				this._workers.delete(worker);
+				buffer.toString('utf8').split('\n').forEach((line) =>
+				{
+					if (line)
+					{
+						debugerror(line);
+					}
+				});
 			});
 
-			// Add the Worker to the Set
-			this._workers.add(worker);
+			worker.on('exit', (code, signal) =>
+			{
+				debug('worker process closed [workerId:%s, code:%s, signal:%s]', worker.workerId, code, signal);
+
+				this._workers.delete(worker.workerId);
+			});
+
+			worker.on('error', (error) =>
+			{
+				debugerror('worker process error [workerId:%s]: %s', worker.workerId, error);
+			});
+
+			// Add the worker to the map
+			this._workers.set(workerId, worker);
 		}
 	}
 
@@ -89,30 +127,17 @@ class Server extends EventEmitter
 	{
 		debug('close()');
 
-		// Close every Worker
-		for (let worker of this._workers)
+		// Remove this server from the set
+		servers.delete(this);
+
+		// Kill every worker process
+		for (let worker of this._workers.values())
 		{
-			worker.close();
+			worker.kill('SIGTERM');
 		}
+
+		// Clear the workers map
 		this._workers.clear();
-
-		this.emit('close');
-	}
-
-	createRoom(options)
-	{
-		debug('createRoom()');
-
-		let worker = this._getRandomWorker();
-
-		return worker.createRoom(options);
-	}
-
-	_getRandomWorker()
-	{
-		let array = Array.from(this._workers);
-
-		return array[array.length * Math.random() << 0];
 	}
 }
 

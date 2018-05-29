@@ -29,16 +29,16 @@ DEV_FLAGS := $(DO_DEBUG_SYMBOLS) $(DO_SANITIZE) $(DO_OPTIMIZE) $(DO_PEDANTIC)
 #
 
 # App source files.
-APP_SOURCES := $(shell find ./worker/src -name "*.cpp")
+APP_SOURCES := $(shell find ./src -name "*.cpp")
 
 # App headers directory.
-APP_HEADERS_DIR := ./worker/include
+APP_HEADERS_DIR := ./include
 
 # App header files (just for documentation).
 APP_HEADERS := $(shell find $(APP_HEADERS_DIR) -name "*.h")
 
 # App binary directory.
-APP_BIN_DIR := ./worker/bin
+APP_BIN_DIR := ./bin
 
 # System libraries to link with.
 SYSTEM_LIBS := pthread
@@ -57,7 +57,6 @@ DEP_SOURCES += ./submodules/jsoncpp/dist/jsoncpp.cpp
 DEP_HEADERS_DIRS :=
 DEP_HEADERS_DIRS += ./submodules/jsoncpp/dist
 DEP_HEADERS_DIRS += ./submodules/usrsctp/usrsctplib
-DEP_HEADERS_DIRS += ./submodules/picojson
 
 # Dependencies static libraries to link with.
 DEP_LIBS :=
@@ -104,7 +103,7 @@ default: $(APP_NAME)
 $(APP_NAME): check_pkg_libs echo_compiling_all_objs $(ALL_OBJS)
 	@ mkdir -p $(APP_BIN_DIR)
 	@ echo "INFO: linking .o objects and libraries into $(APP_BIN_DIR)/$(APP_NAME) ..."
-	$(LINK.cc) $(ALL_OBJS) $(DEP_LIBS) -o $(APP_BIN_DIR)/$(APP_NAME) $(LDFLAGS)
+	$(LINK.cc) $(ALL_OBJS) $(DEP_LIBS) -o $(APP_BIN_DIR)/$(APP_NAME)
 	@ echo "INFO: executable generated at $(APP_BIN_DIR)/$(APP_NAME)"
 
 # Check required libraries with pkg-support.
